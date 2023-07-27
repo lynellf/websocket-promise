@@ -72,10 +72,10 @@ class WSProxy {
   send = (...args) => this.#connection.send(...args);
 }
 
-async function startChatSession() {
+async function startChatSession(connection) {
   try {
-    await wsConnection.connect();
-    const sessionMeta = await wsConnection.postMessage("1", {
+    await connection.connect();
+    const sessionMeta = await connection.postMessage("1", {
       name: "Ezell Frazier"
     });
 
@@ -87,8 +87,8 @@ async function startChatSession() {
 
 async function chatApp() {
   const chatLog = [];
-  const wsConnection = new WSProxy("ws://localhost:3000");
-  const sessionMeta = await startChatSession();
+  const connection = new WSProxy("ws://localhost:3000");
+  const sessionMeta = await startChatSession(connection);
 
   wsConnection.onmessage = (event) => {
     chatLog.push(event.data)
