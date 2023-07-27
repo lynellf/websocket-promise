@@ -90,7 +90,7 @@ async function chatApp() {
   const connection = new WSProxy("ws://localhost:3000");
   const sessionMeta = await startChatSession(connection);
 
-  wsConnection.onmessage = (event) => {
+  connection.onmessage = (event) => {
     chatLog.push(event.data)
     console.log('chat log', chatLog)
   };
@@ -101,7 +101,7 @@ async function chatApp() {
 
   submitBtn.onclick(() => {
     chatLog.push(message);
-    wsConnection.send(
+    connection.send(
       JSON.stringify({
         sessionMeta,
         message
